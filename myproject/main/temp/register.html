@@ -1,0 +1,53 @@
+{% extends "main.html" %}
+{% block links %}
+<link href="/static/css/register.css" rel="stylesheet">
+{% endblock %}
+{% block content %}
+<div class="jumbotron">
+    <h3>Register for Customer</h3>
+  {% for msg in get_flashed_messages() %}
+<div class="alert alert-danger" role="alert">
+
+    {{ msg|e }}
+
+</div>
+{% endfor %}
+
+
+{% for i in form.errors %}
+<div class="alert alert-danger" role="alert">
+  {{ form.errors[i][0] }}
+</div>
+{% endfor %}
+{% if error %}
+<p>{{ error }}</p>
+{% endif %}
+<form action="" method="post" >
+{{ form.hidden_tag() }}
+    <div class="mb-3">
+    {{ form.email.label(class="form-label") }}
+        {{ form.email(class="form-control") }}</div>
+
+                <div class="mb-3">
+    {{ form.username.label(class="form-label") }}
+                {{ form.username(class="form-control") }}</div>
+
+
+    <div class="mb-3">
+    {{ form.password.label(class="form-label") }}
+            {{ form.password(class="form-control") }}</div>
+
+                    <div  class="mb-3">
+                        {{ form.pass_confirm.label(class="form-label") }}
+                        {{ form.pass_confirm(class="form-control") }}
+                    </div>
+
+                        <div class="mb-3">
+                            {{  form.submit(class="btn btn-primary") }}
+                        </div>
+
+</form>
+
+</div>
+<!--<div style="margin-bottom:30px"></div>-->
+{% endblock %}

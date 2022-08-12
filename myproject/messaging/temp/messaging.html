@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input value="{{ current_user.id }}" hidden id="user">
+<ul id="messages">
+{% for i in messages %}
+    <li>{{ i.text }}</li>
+    {% endfor %}
+</ul>
+<!-- make a float left or right based on the sender and the receiver -->
+<input id="myMessage">
+<button id="sendbutton">send</button>
+<script src="https://cdn.socket.io/3.1.3/socket.io.min.js" integrity="sha384-cPwlPLvBTa3sKAgddT6krw0cJat7egBga3DJepJyrLl4Q9/5WLra3rrnMcyTyOnh" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+<!--    var socket = io.connect('https://127.0.0.1');-->
+    var socket = io();
+
+
+    $('#sendbutton').on('click', function () {
+        socket.emit('send_message',{'text': $('#myMessage').val() })
+    });
+
+    socket.on('new_message', function(msg) {
+        $('#messages').append('<li>' + msg['text']['text'] + '</li>');
+        console.log('Received message');
+        console.log(msg);
+        if( $('#user').val() == msg['sender'] ){
+        console.log('s')
+        <!--       a code to help implement with every message like my message and your message in styling but i am lazy  -->
+        <!--       so do it yourself ☺ -->
+        }
+
+
+    });
+
+    }
+    );
+
+
+
+
+</script>
+</body>
+</html>
