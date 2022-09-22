@@ -55,6 +55,7 @@ def start_new_chat(id_of_user):
 
 
 @messaging.route('/messaging/<int:user_id>', methods=['post', 'get'])
+@login_required
 def messaging_users(user_id):
     a = Rooms.query.filter(or_(and_(Rooms.participant_one == current_user.id, Rooms.participant_two == user_id),
                                and_(Rooms.participant_one == user_id,
@@ -70,7 +71,7 @@ def messaging_users(user_id):
     session['room'] = str(a.uu)
     session['other_id'] = str(user_id)
     print(messages)
-    return render_template('messaging.html', messages=messages[0], )
+    return render_template('messa.html', messages=messages[0], )
 
 
 def get_user_by_id(i):
@@ -90,6 +91,7 @@ def connect():
 
 
 @socketio.on('disconnect')
+@login_required
 def on_leave():
     try:
         leave_room(session['room'])

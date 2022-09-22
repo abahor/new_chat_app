@@ -14,7 +14,7 @@ main = Blueprint('main', __name__, template_folder="temp", )
 @main.route('/login', methods=['post', 'get'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for("messaging.chats"))
+        return redirect(url_for("messaging.chating"))
 
     form = LoginForm()
     if form.validate_on_submit():
@@ -39,6 +39,8 @@ def login():
 
 @main.route('/register', methods=['get', 'post'])
 def register():
+    if current_user.is_authenticated:
+        return redirect('/chats')
     form = RegistrationForm()
     if form.validate_on_submit():
         user = UsersModel.query.filter_by(email=form.email.data).first()
